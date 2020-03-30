@@ -9,34 +9,34 @@ export class TurnOrder {
         this.secondPokemon = secondPokemon;
     }
 
-    getFirstAttacker(): Pokemon {
-        const quickGriever = this.getQuickGrieverIfExists();
+    get(): Pokemon[] {
+        const quickClawOrder = this.getOrderIfQuickClawActivated();
 
-        if (quickGriever != undefined)
-            return quickGriever;
+        if (quickClawOrder != undefined)
+            return quickClawOrder;
 
-        return this.getFastest();
+        return this.getOrderBySpeed();
     }
 
-    private getQuickGrieverIfExists() : Pokemon | undefined {
-        const firstPokemonIsQuickGriever = this.firstPokemon.heldObject == "QuickClaw" && Math.random() <= 0.20;
-        const secondPokemonIsQuickGriever = this.secondPokemon.heldObject == "QuickClaw" && Math.random() <= 0.20;
+    private getOrderIfQuickClawActivated() : Pokemon[] | undefined {
+        const firstPokemonIsQuickGriever = this.firstPokemon.heldObject == "Quick Claw" && Math.random() <= 0.20;
+        const secondPokemonIsQuickGriever = this.secondPokemon.heldObject == "Quick Claw" && Math.random() <= 0.20;
 
         if (firstPokemonIsQuickGriever && !secondPokemonIsQuickGriever)
-            return this.firstPokemon;
+            return [this.firstPokemon, this.secondPokemon];
         else if (secondPokemonIsQuickGriever && !firstPokemonIsQuickGriever)
-            return this.secondPokemon;
+            return [this.secondPokemon, this.firstPokemon];
         else
             return undefined
     }
 
-    private getFastest() : Pokemon {
+    private getOrderBySpeed() : Pokemon[] {
         if(this.firstPokemon.speed > this.secondPokemon.speed)
-            return this.firstPokemon;
+            return [ this.firstPokemon, this.secondPokemon ];
         else if(this.firstPokemon.speed > this.secondPokemon.speed)
-            return Math.round(Math.random()) == 0 ?  this.firstPokemon : this.secondPokemon;
+            return Math.round(Math.random()) == 0 ?  [this.firstPokemon, this.secondPokemon] : [this.secondPokemon, this.firstPokemon];
         else
-            return this.secondPokemon;
+            return [this.secondPokemon, this.firstPokemon];
     }
 
 

@@ -5,29 +5,29 @@ var TurnOrder = /** @class */ (function () {
         this.firstPokemon = firstPokemon;
         this.secondPokemon = secondPokemon;
     }
-    TurnOrder.prototype.getFirstAttacker = function () {
-        var quickGriever = this.getQuickGrieverIfExists();
-        if (quickGriever != undefined)
-            return quickGriever;
-        return this.getFastest();
+    TurnOrder.prototype.get = function () {
+        var quickClawOrder = this.getOrderIfQuickClawActivated();
+        if (quickClawOrder != undefined)
+            return quickClawOrder;
+        return this.getOrderBySpeed();
     };
-    TurnOrder.prototype.getQuickGrieverIfExists = function () {
-        var firstPokemonIsQuickGriever = this.firstPokemon.heldObject == "QuickClaw" && Math.random() <= 0.20;
-        var secondPokemonIsQuickGriever = this.secondPokemon.heldObject == "QuickClaw" && Math.random() <= 0.20;
+    TurnOrder.prototype.getOrderIfQuickClawActivated = function () {
+        var firstPokemonIsQuickGriever = this.firstPokemon.heldObject == "Quick Claw" && Math.random() <= 0.20;
+        var secondPokemonIsQuickGriever = this.secondPokemon.heldObject == "Quick Claw" && Math.random() <= 0.20;
         if (firstPokemonIsQuickGriever && !secondPokemonIsQuickGriever)
-            return this.firstPokemon;
+            return [this.firstPokemon, this.secondPokemon];
         else if (secondPokemonIsQuickGriever && !firstPokemonIsQuickGriever)
-            return this.secondPokemon;
+            return [this.secondPokemon, this.firstPokemon];
         else
             return undefined;
     };
-    TurnOrder.prototype.getFastest = function () {
+    TurnOrder.prototype.getOrderBySpeed = function () {
         if (this.firstPokemon.speed > this.secondPokemon.speed)
-            return this.firstPokemon;
+            return [this.firstPokemon, this.secondPokemon];
         else if (this.firstPokemon.speed > this.secondPokemon.speed)
-            return Math.round(Math.random()) == 0 ? this.firstPokemon : this.secondPokemon;
+            return Math.round(Math.random()) == 0 ? [this.firstPokemon, this.secondPokemon] : [this.secondPokemon, this.firstPokemon];
         else
-            return this.secondPokemon;
+            return [this.secondPokemon, this.firstPokemon];
     };
     return TurnOrder;
 }());
