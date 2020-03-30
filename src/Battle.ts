@@ -5,7 +5,6 @@ import {TurnOrder} from "./TurnOrder";
 export class Battle {
     public firstPokemon: Pokemon;
     public secondPokemon: Pokemon;
-
     public roundMoves: [Pokemon, Pokemon, Move][]; // from, to, move
 
     constructor(firstPokemon: Pokemon, secondPokemon: Pokemon) {
@@ -15,6 +14,9 @@ export class Battle {
     }
 
     addAttack (from: Pokemon, to: Pokemon, move: Move) {
+        if (this.getRoundMove(from) != undefined) {
+            throw "Attack already defined for this round and this Pokemon"
+        }
         this.roundMoves.push([from, to, move]);
     }
 
@@ -26,8 +28,7 @@ export class Battle {
         const order = new TurnOrder(this.firstPokemon, this.secondPokemon).get();
 
         for (let pokemon of order) {
-            const roundMove: [Pokemon, Pokemon, Move]  = this.getRoundMove(pokemon);
-
+            const roundMove: [Pokemon, Pokemon, Move] = <[Pokemon, Pokemon, Move]> this.getRoundMove(pokemon);
             const attacker: Pokemon = roundMove[0];
             const defender: Pokemon = roundMove[1];
             const move: Move = roundMove[2];
@@ -38,12 +39,11 @@ export class Battle {
         this.roundMoves = [];
     }
 
-    private getRoundMove(pokemon: Pokemon) : [Pokemon, Pokemon, Move] {
+    private getRoundMove(pokemon: Pokemon) : [Pokemon, Pokemon, Move] | undefined {
         for (let roundMove of this.roundMoves) {
             if (roundMove[0] == pokemon)
                 return roundMove;
         }
-        throw "Missing move";
+        return undefined;
     }
-
 }

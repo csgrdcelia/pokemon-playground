@@ -8,6 +8,9 @@ var Battle = /** @class */ (function () {
         this.roundMoves = [];
     }
     Battle.prototype.addAttack = function (from, to, move) {
+        if (this.getRoundMove(from) != undefined) {
+            throw "Attack already defined for this round and this Pokemon";
+        }
         this.roundMoves.push([from, to, move]);
     };
     Battle.prototype.attack = function () {
@@ -31,7 +34,7 @@ var Battle = /** @class */ (function () {
             if (roundMove[0] == pokemon)
                 return roundMove;
         }
-        throw "Missing move";
+        return undefined;
     };
     return Battle;
 }());
