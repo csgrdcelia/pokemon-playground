@@ -1,3 +1,4 @@
 import { Pokemon } from "./Pokemon";
-var pokemon = new Pokemon("Dracaufeu");
-console.log(pokemon.name);
+var dracaufeu = new Pokemon("Dracaufeu");
+var bulbizarre = new Pokemon("Bulbizarre");
+console.log(dracaufeu.name);
