@@ -36,6 +36,14 @@ var Battle = /** @class */ (function () {
         }
         return undefined;
     };
+    Battle.prototype.getWinner = function () {
+        if (this.firstPokemon.hp > 0) {
+            return this.firstPokemon;
+        }
+        else {
+            return this.secondPokemon;
+        }
+    };
     return Battle;
 }());
 exports.Battle = Battle;

@@ -46,4 +46,12 @@ export class Battle {
         }
         return undefined;
     }
+
+    getWinner() : Pokemon {
+        if (this.firstPokemon.hp > 0) {
+            return this.firstPokemon;
+        } else {
+            return this.secondPokemon;
+        }
+    }
 }

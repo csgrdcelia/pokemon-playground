@@ -10,6 +10,12 @@ var Pokemon = /** @class */ (function () {
         this.heldObject = heldObject;
         this.hp = 100;
     }
+    Pokemon.prototype.isAlive = function () {
+        return this.hp > 0;
+    };
+    Pokemon.prototype.getRandomMove = function () {
+        return this.moves[0];
+    };
     return Pokemon;
 }());
 exports.Pokemon = Pokemon;

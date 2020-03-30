@@ -17,4 +17,12 @@ export class Pokemon {
         this.heldObject = heldObject;
         this.hp = 100;
     }
+
+    public isAlive() {
+        return this.hp > 0;
+    }
+
+    public getRandomMove() : Move {
+        return this.moves[0];
+    }
 }
